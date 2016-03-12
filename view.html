@@ -24,7 +24,7 @@
     <div class="collapseMe">
         <widget-row>
             <widget-cell>
-                <h4>Today (Click to see hours for every day) 
+                <h4>Today (Click to see more) 
                     <widget-cell> 
                         <widget-cell clickable ng-click="showPAC(item)">PAC</widget-cell>9:00 am - 10:30 pm </widget-cell>
                     <widget-cell>
@@ -65,6 +65,10 @@
             </widget-not-searching>
         </widget-search>
     </div>
+    
+    <blockquote class="twitter-tweet" data-cards="hidden" data-lang="zh-cn"><p lang="en" dir="ltr">Huge congrats to <a href="https://twitter.com/nlancee">@nlancee</a> of <a href="https://twitter.com/UWTrackandField">@UWTrackandField</a> on her <a href="https://twitter.com/CIS_TF">@CIS_TF</a> Silver Medal in the 300m with a 🕑 of 39.17! 🎉👏🏃🏻💨 <a href="https://t.co/z2ait88La8">pic.twitter.com/z2ait88La8</a></p>&mdash; Waterloo Warriors (@WlooWarriors) <a href="https://twitter.com/WlooWarriors/status/708473300020629504">2016年3月12日</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    
 </script>
 
 <!-- Menu template -->
@@ -138,7 +142,54 @@
             <h5> <a ng-href="{{item2.value.url}}" target="_blank"><font color="red">{{item2.value.num}}</font></a> </h5>
         </widget-cell>
         </widget-row>
+    
+    <widget-row>
+        <widget-cell>
+            <h5> {{item2.value.rating}} </h5>
+        </widget-cell>
+        </widget-row>
+    <widget-row>
+        <widget-cell>
+            <h5>{{item2.value.review_title}}</h5>
+        </widget-cell>
+        </widget-row>
+    <div style="width:500px;height:100px;border:1px solid #000;">Tell us your experience!</div>
+    
+    <!--try to insert comments
+
+
+
+
+
+--> 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </script>
+
+<script>
+    var clicked=0
+    function showCourses(){
+       element=document.getElementById("swimspec")
+       tttt="<p>Saturday:</p><p>Rec Swimming:</p><p>2:10 pm - 3:00 pm</p><p>Fitness and Rec Swimming:</p><p>3:10 pm - 4:00 pm</p>"
+       if (clicked==0) {
+          element.innerHTML=tttt
+          clicked=1
+       }
+       else {
+          element.innerHTML=""
+          clicked=0
+       }
+    }
+</script>
+
 
 
 <script type="text/ng-template" id="pac.html">
@@ -176,20 +227,16 @@
          <td>9:00 am - 5:30 am</td>   
 </tr>
 </table>
+   <div style="position:relative;">
      <img ng-src="http://s5.sinaimg.cn/orignal/005PMBMqgy704g7rmNCf4&690" width=99% height=99%>
          <img ng-src="http://s2.sinaimg.cn/orignal/005PMBMqgy704iyGlKp21&690" style="position:absolute;top:450px;right:80px;" 
-              width=7% height=7% id="swim" ng-click="showCourses()">
-         <span ng-if="show" id="swimspec" style="position:absolute;top:400px;right:20px;" background-color="white" border-color"black">
-             <div style="display: none">
-             <p>Saturday:</p >
-             <p>Rec Swimming:</p > 
-             <p>2:10 pm - 3:00 pm</p >
-             <p>Fitness and Rec Swimming:</p >
-             <p>3:10 pm - 4:00 pm</p >
-                 </div>
+              width=7% height=7% id="swim" onclick="showCourses()">
+         <span id="swimspec" style="position:absolute;top:500px;right:86px;" background-color="white" border-color"black">
+             
          </span>
+             </div>
 </script>
-         
+
          <script type="text/ng-template" id="cif.html">
     <widget-row>
         <widget-cell>
@@ -236,3 +283,5 @@
                  </div>
          </span>
 </script>
+        
+       
