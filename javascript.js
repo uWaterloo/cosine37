@@ -20,43 +20,90 @@ angular.module('portalApp')
     $scope.item = {value:''};
 
     $scope.item2 = {value:''};
+    $scope.item3 = {value:''};
+    $scope.item4 = {value:''};
     // Model for the search and list example
+    // 
+    
+    $scope.PAC = [{
+        title: "Recreation Hours",
+        details:  "bla",
+        category: '1'
+    }]
+    
     $scope.model = [{
         title: "Swim",
         details:  [{
         title: "Courses",
-        details:  "bla",
-        category: '1'
+        details:  "Level1 Beginner",
+        location_time: "PAC   Thursdays   20:00-21:00",
+        Instruction:"Swimming course Level 1 is suitable for those \" landlubbers \".Basic skills for "+
+            "swimming and throughout guide will give you a kivk out. Come on and have fun!",  
+        num: "Want to register? Come on!",
+            picture: "http://s10.sinaimg.cn/orignal/005PMBMqgy704iFqbONf9&690",
+            url: "https://nike.uwaterloo.ca/Course/Search.aspx"
     }, {
         title: "Fitness & Recreation Hours",
-        details:  "bla",
-        category: '1'
+        details:  "Wednesday, Mar 16",
+        location_time: "PAC 16:00-18:00",
+        num: ""
     }, {
         title: "Recreation Hours",
-        details:  "bla",
-        category: '1'
+        details:  "Friday, Mar 18",
+        location_time: "PAC 18:00-20:00",
+        num: ""
     }],
         category: '1'
     }, {
-        title: "Badminton",
-        details: "item 2 details",
-        category: '2'
+        title: "Skating",
+        details: [{
+        title: "Courses",
+        details:  "11:00-12:20 every Wednesday",
+        location_time: "CIF Arena",
+        num: ""
+    }, {
+        title: "Wednesday and Friday Hours",
+        details:  "11:30-12:20",
+        location_time: "CIF Arena",
+        num: ""
+    }, {
+        title: "Thursday Hours",
+        details:  "11:00-12:20 every Wednesday",
+        location_time: "CIF Arena",
+        num: "Remind: Do not open on March 26."
+    }],
+        category: "Recreation"
     }, {
         title: "Basketball",
         details: "item 3 details",
-        category: '1'
+        category: "Ball"
     }, {
         title: "Indoor Soccer",
         details: "item 4 details",
-        category: '2'
+        category: 'Ball'
     }, {
         title: "Volleyball",
         details: "item 5 details",
-        category: '1'
+        category: 'Ball'
     }, {
-        title: "Women Only",
+        title: "Ballroom Dance Club",
+        details: "item 5 details",
+        category: 'Recreation'
+    }, 
+       {
+        title: "Triathlon",
+        details: "item 5 details",
+        category: "Track and Field"
+    }, 
+                     {
+        title: "Women Only Swim",
         details: "item 6 details",
-        category: '2'
+        category: "Women Only"
+    },
+      {
+        title: "Women Only Volleyball",
+        details: "item 6 details",
+        category: "Women Only"
     }];
 
     // initialize the service
@@ -90,7 +137,23 @@ angular.module('portalApp')
         // Set which item to show in the details view
         $scope.item2.value = item;
         // Show details view in the second column
-        $scope.portalHelpers.showView('details2.html', 2);
+        $scope.portalHelpers.showView('details2.html', 3);
+    };
+    
+    $scope.showPAC = function (item) {
+        console.log(item);
+        // Set which item to show in the details view
+        $scope.item3.value = item;
+        // Show details view in the second column
+        $scope.portalHelpers.showView('pac.html', 2);
+    };
+    
+	$scope.showCIF = function (item) {
+        console.log(item);
+        // Set which item to show in the details view
+        $scope.item4.value = item;
+        // Show details view in the second column
+        $scope.portalHelpers.showView('cif.html', 2);
     };
 
     // Handle "previous item" click from the details page
