@@ -21,7 +21,7 @@ angular.module('portalApp')
 
     // Model for the search and list example
     $scope.model = [{
-        title: "item 1",
+        title: "Swim",
         details: "item 1 details",
         category: '1'
     }, {
