@@ -26,9 +26,9 @@
             <widget-cell>
                 <h4>Today (Click to see hours for every day) 
                     <widget-cell> 
-                        <widget-cell clickable ng-click="showDetails(item)">PAC</widget-cell>9:00 am - 10:30 pm </widget-cell>
+                        <widget-cell clickable ng-click="showPAC(item)">PAC</widget-cell>9:00 am - 10:30 pm </widget-cell>
                     <widget-cell>
-                        <widget-cell clickable ng-click="showDetails(item)">CIF</widget-cell>8:30 am - 10:00 pm</widget-cell></h4>
+                        <widget-cell clickable ng-click="showCIF(item)">CIF</widget-cell>8:30 am - 10:00 pm</widget-cell></h4>
             </widget-cell>
         </widget-row>
         
@@ -132,4 +132,100 @@
             <div class="pHighlight">{{item2.value.details}}</div>
         </widget-cell>
     </widget-row>
+</script>
+
+<script type="text/ng-template" id="pac.html">
+    <widget-row>
+        <widget-cell>
+            <h2>PAC</h2>
+        </widget-cell>
+    </widget-row>
+    <widget-row>
+        <widget-cell>
+            <div class="pHighlight">{{item2.value.details}}</div>
+        </widget-cell>
+    </widget-row>
+    <h4> PAC Hours </h4>
+    <table border="2">
+        <tr>
+<td>DAYS OF THE WEEK</td>
+<td>Jan. 4 - Apr. 3</td>
+            <td>Apr. 4 - Apr. 22</td>
+</tr>
+<tr>
+<tr>
+<td>Monday - Friday</td>
+<td>7:00 am - 12:30 am</td>
+    <td>8:00 am - 10:30 am</td>
+</tr>
+<tr>
+<td>Saturday</td>
+<td>9:00 am - 10:30 pm</td>
+    <td>9:00 am - 5:30 pm</td>
+</tr>
+        <tr>
+<td>Sunday</td>
+<td>9:00 am - 12:30 am</td>
+         <td>9:00 am - 5:30 am</td>   
+</tr>
+</table>
+     <img src="http://s5.sinaimg.cn/orignal/005PMBMqgy704g7rmNCf4&690" width=99% height=99%>
+         <img src="http://s2.sinaimg.cn/orignal/005PMBMqgy704iyGlKp21&690" style="position:absolute;top:450px;right:80px;" 
+              width=7% height=7% id="swim" ng-click="showCourses()">
+         <span ng-if="show" id="swimspec" style="position:absolute;top:400px;right:20px;" background-color="white" border-color"black">
+             <div style="display: none">
+             <p>Saturday:</p>
+             <p>Rec Swimming:</p> 
+             <p>2:10 pm - 3:00 pm</p>
+             <p>Fitness and Rec Swimming:</p>
+             <p>3:10 pm - 4:00 pm</p>
+                 </div>
+         </span>
+</script>
+         
+         <script type="text/ng-template" id="cif.html">
+    <widget-row>
+        <widget-cell>
+            <h2>CIF</h2>
+        </widget-cell>
+    </widget-row>
+    <widget-row>
+        <widget-cell>
+            <div class="pHighlight">{{item2.value.details}}</div>
+        </widget-cell>
+    </widget-row>
+    <h4> CIF Hours </h4>
+    <table border="2">
+        <tr>
+<td>DAYS OF THE WEEK</td>
+<td>Jan. 4 - Apr. 3</td>
+            <td>Apr. 4 - Apr. 22</td>
+</tr>
+<tr>
+<tr>
+<td>Monday - Friday</td>
+<td>7:00 am - 12:30 am</td>
+    <td>8:00 am - 10:30 am</td>
+</tr>
+<tr>
+<td>Saturday</td>
+<td>9:00 am - 10:30 pm</td>
+    <td>9:00 am - 5:30 pm</td>
+</tr>
+        <tr>
+<td>Sunday</td>
+<td>9:00 am - 12:30 am</td>
+         <td>9:00 am - 5:30 am</td>   
+</tr>
+</table>
+     <img src="http://s8.sinaimg.cn/orignal/005PMBMqgy704g0gRgP67&690" width=99% height=99%>
+         <span ng-if="show" id="swimspec" style="position:absolute;top:400px;right:20px;" background-color="white" border-color"black">
+             <div style="display: none">
+             <p>Saturday:</p>
+             <p>Rec Swimming:</p> 
+             <p>2:10 pm - 3:00 pm</p>
+             <p>Fitness and Rec Swimming:</p>
+             <p>3:10 pm - 4:00 pm</p>
+                 </div>
+         </span>
 </script>
