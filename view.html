@@ -148,13 +148,56 @@
             <h5> {{item2.value.rating}} </h5>
         </widget-cell>
         </widget-row>
+    
+     
+    <widget-row>
+        <widget-cell>
+           <div ng-if="item2.value.star">
+            <img src="http://s16.sinaimg.cn/orignal/005PMBMqgy704pE11H9cf&690", width="20px" height="20px"/>
+            <img src="http://s16.sinaimg.cn/orignal/005PMBMqgy704pE11H9cf&690", width="20px" height="20px"/>
+            <img src="http://s16.sinaimg.cn/orignal/005PMBMqgy704pE11H9cf&690", width="20px" height="20px"/>
+            <img src="http://s16.sinaimg.cn/orignal/005PMBMqgy704pE11H9cf&690", width="20px" height="20px"/>
+            <img src="http://s16.sinaimg.cn/orignal/005PMBMqgy704pE11H9cf&690", width="20px" height="20px"/>
+            <img src="http://s16.sinaimg.cn/orignal/005PMBMqgy704pE11H9cf&690", width="20px" height="20px"/>
+            <img src="http://s16.sinaimg.cn/orignal/005PMBMqgy704pE11H9cf&690", width="20px" height="20px"/>
+            <img src="http://s16.sinaimg.cn/orignal/005PMBMqgy704pE11H9cf&690", width="20px" height="20px"/>
+            <img src="http://s16.sinaimg.cn/orignal/005PMBMqgy704pE11H9cf&690", width="20px" height="20px"/>
+            <img src="http://s3.sinaimg.cn/orignal/005PMBMqgy704ugVW4q72&690", width="20px" height="20px"/>
+           </div>
+        </widget-cell>
+        </widget-row>
+       
+                                                                                                         
     <widget-row>
         <widget-cell>
             <h5>{{item2.value.review_title}}</h5>
         </widget-cell>
         </widget-row>
-    <div style="width:500px;height:100px;border:1px solid #000;">Tell us your experience!</div>
     
+    <div ng-if="item2.value.showFeedback" > 
+               <widget-row>
+                <widget-cell>
+                    <form class="form-inline" ng-submit="insertData()">
+                        <div class="input-group" style="width: 100%;">
+                            <input type="text" class="form-control" ng-model="insertValue.value" placeholder="Tell us what you are thinking about!" />
+                            <span class="input-group-btn" style="overflow:hidden;">
+                                <button class="btn btn-primary glyphicon glyphicon glyphicon-ok btn" type="submit" style="margin-top: -1px;"></button>
+                            </span>
+                        </div>
+                    </form>
+                </widget-cell>
+            </widget-row>
+
+            <widget-row ng-repeat="item in dbData.value">
+                <widget-cell>
+                  <!--  <div class="pDetails">Id: {{item.id}}</div> -->
+                    <div class="pDetails">UserId: {{item.userId}}</div>
+                    <div class="pDetails">Comments: {{item.value}}</div>
+                </widget-cell>
+            </widget-row>
+        </div>
+   
+            
     <!--try to insert comments
 
 
@@ -162,15 +205,6 @@
 
 
 --> 
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
 </script>
 
