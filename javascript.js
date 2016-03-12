@@ -20,6 +20,9 @@ angular.module('portalApp')
     $scope.item = {value:''};
 
     $scope.item2 = {value:''};
+    $scope.item3 = {value:''};
+    $scope.item4 = {value:''};
+    $scope.show = false;
     // Model for the search and list example
     $scope.model = [{
         title: "Swim",
@@ -92,6 +95,22 @@ angular.module('portalApp')
         // Show details view in the second column
         $scope.portalHelpers.showView('details2.html', 2);
     };
+    
+    $scope.showPAC = function (item) {
+        console.log(item);
+        // Set which item to show in the details view
+        $scope.item3.value = item;
+        // Show details view in the second column
+        $scope.portalHelpers.showView('pac.html', 2);
+    };
+    
+    $scope.showCIF = function (item) {
+        console.log(item);
+        // Set which item to show in the details view
+        $scope.item4.value = item;
+        // Show details view in the second column
+        $scope.portalHelpers.showView('cif.html', 2);
+    };
 
     // Handle "previous item" click from the details page
     $scope.prevItem = function () {
@@ -105,7 +124,10 @@ angular.module('portalApp')
         var nextItem = $scope.portalHelpers.getNextListItem();
         $scope.showDetails(nextItem);
     }
-
+ 
+     $scope.showCourses = function() {
+         $scope.show=true;
+    }
 	
 }])
 // Factory maintains the state of the widget
