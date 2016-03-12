@@ -22,9 +22,13 @@
         </widget-row>
     
         <div class="collapseMe">
-        <widget-row clickable ng-click="showDetails(item)">
+        <widget-row>
             <widget-cell>
-                <h2>Feeling like PAC or CIF ? </h2>
+                <h4>Today (Click to see hours for every day) 
+                    <widget-cell> 
+                        <widget-cell clickable ng-click="showDetails(item)">PAC</widget-cell>9:00 am - 10:30 pm </widget-cell>
+                    <widget-cell>
+                        <widget-cell clickable ng-click="showDetails(item)">CIF</widget-cell>8:30 am - 10:00 pm</widget-cell></h4>
             </widget-cell>
         </widget-row>
         
