@@ -12,6 +12,12 @@ angular.module('portalApp')
     // Import variables and functions from service
     $scope.data = cosine37Factory.data;
 
+    //insert SQL here
+   // $scope.insertValue = cosine37Factory.insertValue;
+  //  $scope.loading = sampleDatabaseAccessFactory.loading;
+   // $scope.dbData = sampleDatabaseAccessFactory.dbData;
+    
+    
 	// Show main view in the first column
 	$scope.portalHelpers.showView('main.html', 1);
 
@@ -41,7 +47,9 @@ angular.module('portalApp')
             "swimming and throughout guide will give you a kivk out. Come on and have fun!",  
         num: "Want to register? Come on!",
             picture: "http://s10.sinaimg.cn/orignal/005PMBMqgy704iFqbONf9&690",
-            url: "https://nike.uwaterloo.ca/Course/Search.aspx"
+            url: "https://nike.uwaterloo.ca/Course/Search.aspx",
+            rating: "Ratings: 9.6/10 (53 ratings)",
+            review_title: "Add your rating and review:"
     }, {
         title: "Fitness & Recreation Hours",
         details:  "Wednesday, Mar 16",
@@ -194,7 +202,9 @@ angular.module('portalApp')
             sourceLoaded();
         }
 
-
+    /*function showCourses(){
+        $scope.show=true
+    }*/
 	function sourceLoaded() {
             sourcesLoaded++;
             if (sourcesLoaded > 0)
