@@ -17,12 +17,12 @@
 
 		<widget-row>
             <widget-cell>
-                <h2>@WlooWarriors</h2>
+                <h2>{{data.value.message}}</h2>
             </widget-cell>
         </widget-row>
     
         <div class="collapseMe">
-        <widget-row>
+       <widget-row>
             <widget-cell>
                 <h4>Today (Click to see hours for every day) 
                     <widget-cell> 
@@ -45,7 +45,7 @@
             </widget-filter>
 
             <widget-searching>
-                <widget-list list="item in searchResults" show-items="3">
+                <widget-list list="item in searchResults" show-items="4">
                     <widget-row clickable ng-click="showDetails(item)">
                         <widget-cell fill>{{item.title}}</widget-cell>
                         <widget-cell>
@@ -58,10 +58,10 @@
             <widget-not-searching>
                 <widget-row>
                     <widget-cell>
-                        <h2>Item List</h2>
+                        <h2>Sports List</h2>
                     </widget-cell>
                 </widget-row>
-                <widget-list list="item in model" show-items="6">
+                <widget-list list="item in model" show-items="4">
                     <widget-row clickable ng-click="showDetails(item)">
                         <widget-cell fill>{{item.title}}</widget-cell>
                         <widget-cell>
@@ -94,9 +94,24 @@
     </widget-row>
     <widget-row>
         <widget-cell>
-            <div class="pHighlight">{{item.value.details}}</div>
+     <!--       <div class="pHighlight">{{item.value.details}}</div>  -->
+             <widget-not-searching>
+                <widget-row>
+                    <widget-cell>
+            <!--            <h2>Inter List</h2> -->
+                    </widget-cell>
+                </widget-row>
+                <widget-list list="it in item.value.details" show-items="4">
+                    <widget-row clickable ng-click="showDetails(item)">
+                        <widget-cell fill>{{it.title}}
+                        {{ it.color }}
+                        </widget-cell>
+                        <widget-cell>
+                            <widget-icon name="angle-right"></widget-icon>
+                        </widget-cell>
+                    </widget-row>
+                </widget-list>
+            </widget-not-searching>
         </widget-cell>
     </widget-row>
 </script>
-
-
