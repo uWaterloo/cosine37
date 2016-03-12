@@ -13,16 +13,56 @@ angular.module('portalApp')
     $scope.data = cosine37Factory.data;
 
     //insert SQL here
-   // $scope.insertValue = cosine37Factory.insertValue;
-  //  $scope.loading = sampleDatabaseAccessFactory.loading;
-   // $scope.dbData = sampleDatabaseAccessFactory.dbData;
+    $scope.insertValue = cosine37Factory.insertValue;
+    $scope.loading = cosine37Factory.loading;
+    $scope.dbData = cosine37Factory.dbData;
     
+    // initialize the service
+    cosine37Factory.init($scope);
+    
+        // watch for changes in the loading variable
+    $scope.$watch('loading.value', function () {
+        // if loading
+        if ($scope.loading.value) {
+            // show loading screen in the first column, and don't append it to browser history
+      //      $scope.portalHelpers.showView('loading.html', 1, false);
+            // show loading animation in place of menu button
+            $scope.portalHelpers.toggleLoading(true);
+        } else {
+            $scope.portalHelpers.showView('details2.html', 1);
+            $scope.portalHelpers.toggleLoading(false);
+        }
+    }); 
+  /*  
+        // Create table, invoked by a button press from database test example
+    $scope.createTable = function () {
+        $scope.portalHelpers.invokeServerFunction('createTable').then(function (
+            result) {
+            $scope.dbData.value = [];
+        });
+    }
+    */
+     // Handle form submit in the database test example
+    $scope.insertData = function () {
+        if ($scope.insertValue.value.length > 50)
+            alert('value should be less than 50 characters');
+        else {
+            $scope.portalHelpers.invokeServerFunction('insert', {
+                value: $scope.insertValue.value
+            }).then(function (result) {
+                $scope.dbData.value = result;
+            });
+            $scope.insertValue.value = "";
+        }
+    };
+
+
     
 	// Show main view in the first column
 	$scope.portalHelpers.showView('main.html', 1);
 
     // Import variables and functions from service
-    $scope.loading = cosine37Factory.loading;
+  //  $scope.loading = cosine37Factory.loading;
     $scope.item = {value:''};
 
     $scope.item2 = {value:''};
@@ -48,8 +88,10 @@ angular.module('portalApp')
         num: "Want to register? Come on!",
             picture: "http://s10.sinaimg.cn/orignal/005PMBMqgy704iFqbONf9&690",
             url: "https://nike.uwaterloo.ca/Course/Search.aspx",
-            rating: "Ratings: 9.6/10 (53 ratings)",
-            review_title: "Add your rating and review:"
+            rating: "Ratings: 9.5/10 (53 ratings)",
+            review_title: "Add your rating and review:",
+            star:true,
+            showFeedback:true
     }, {
         title: "Fitness & Recreation Hours",
         details:  "Wednesday, Mar 16",
@@ -192,6 +234,14 @@ angular.module('portalApp')
             value: true
         };
     
+      var insertValue = {
+            value: null
+        };
+
+        var dbData = {
+            value: null
+        };
+    
     var sourcesLoaded = 0;
 
 	var init = function ($scope) {
@@ -199,8 +249,11 @@ angular.module('portalApp')
                 return;
             initialized.value = true;
             // Place your init code here:
+               $scope.portalHelpers.invokeServerFunction('getData').then(function (result) {
+                dbData.value = result;
             sourceLoaded();
-        }
+        });
+    }
 
     /*function showCourses(){
         $scope.show=true
@@ -213,7 +266,10 @@ angular.module('portalApp')
 
         return {
             init: init,
-            loading: loading
+            loading: loading,
+            //insert new
+            insertValue: insertValue,
+            dbData: dbData
         };
 
 }])
