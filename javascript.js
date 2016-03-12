@@ -22,26 +22,38 @@ angular.module('portalApp')
     // Model for the search and list example
     $scope.model = [{
         title: "Swim",
-        details: "item 1 details",
+        details:  [{
+        title: "Courses",
+        details:  "bla",
         category: '1'
     }, {
-        title: "item 2",
+        title: "Fitness & Recreation Hours",
+        details:  "bla",
+        category: '1'
+    }, {
+        title: "Recreation Hours",
+        details:  "bla",
+        category: '1'
+    }],
+        category: '1'
+    }, {
+        title: "Badminton",
         details: "item 2 details",
         category: '2'
     }, {
-        title: "item 3",
+        title: "Basketball",
         details: "item 3 details",
         category: '1'
     }, {
-        title: "item 4",
+        title: "Indoor Soccer",
         details: "item 4 details",
         category: '2'
     }, {
-        title: "item 5",
+        title: "Volleyball",
         details: "item 5 details",
         category: '1'
     }, {
-        title: "item 6",
+        title: "Women Only",
         details: "item 6 details",
         category: '2'
     }];
