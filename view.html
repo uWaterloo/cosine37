@@ -7,7 +7,7 @@
 
 		<widget-row>
             <widget-cell>
-                <h2>{{data.value.message}}</h2>
+                <h2>This is the map for indoor routes</h2>
             </widget-cell>
         </widget-row>
 </script>
@@ -20,3 +20,295 @@
         </a>
     </li>
 </script>
+
+<script>
+var selected=0
+var loc1
+var loc2
+var tloc=17
+var names=new Array("DC","MC","QNC","M3","B2","B1","ESC","C2","EIT","PHY","E3","E2","CPH","DWE","RCH","E5","SLC")
+var a=new Array(tloc*tloc)
+var info=new Array(tloc*tloc)
+var b=new Array(tloc*tloc)
+var e=new Array(tloc*tloc)
+var path=new Array(tloc*tloc)
+var currentFloor=100
+var textdisplay=""
+function getLoc(s){
+         var i
+         for (i=0;i<tloc;i++){
+             if (s==names[i]) return i
+         }
+}
+                               
+function merge(s1,s2){
+         var i=s1.length
+         var l1=s1.length
+         while (s1[i]!=',') i--
+         i++
+         s1=s1.substr(0,i)+s2
+         return s1
+}
+
+function ef(locx,locy,fx,fy){
+         x=getLoc(locx)
+         y=getLoc(locy)
+         a[x*tloc+y]=1
+         a[y*tloc+x]=1
+         path[x*tloc+y]=locx+","+locy
+         path[y*tloc+x]=locy+","+locx
+         b[x*tloc+y]=fx
+         e[x*tloc+y]=fy
+         b[y*tloc+x]=fy
+         e[y*tloc+x]=fx     
+}
+
+function stairs(locx,locy){
+         x=getLoc(locx)
+         y=getLoc(locy)
+         c=currentFloor.toString()
+         s=b[x*tloc+y]
+         t=e[x*tloc+y]
+         ts=""
+         len=s.length
+         if (c=="100"){
+            if (s[0]=='-'){
+               //textdisplay=textdisplay+"Go outside <br />"
+               currentFloor=-1
+               c="-"
+               }
+            else {
+               textdisplay=textdisplay+"Go to Floor "+s[0]+"<br />"
+               ts=ts+s[0]
+               c=ts
+               currentFloor=parseInt(ts)
+               }
+         }
+         var i
+         flag=0
+         for (i=0;i<len;i++){
+             if (s[i]=='-'){
+                textdisplay=textdisplay+"Go outside <br />"
+                textdisplay=textdisplay+"Walk outside to "+locy+" on Floor 1<br />"
+                currentFloor=1
+                flag=1
+                break
+             }
+             if (c[0]==s[i]) {
+                if (c[0]=='-') {
+                   textdisplay=textdisplay+"Walk outside to "+locy+" on Floor 1<br />"
+                   currentFloor=1
+                   flag=1
+                }
+                else {
+                   textdisplay=textdisplay+"Go straight to "+locy+" on Floor "+t[i]+"<br />"
+                   ts=""
+                   ts=ts+t[i]
+                   currentFloor=parseInt(ts)
+                   flag=1
+                }
+             }
+         }//end for
+         if (flag==0){
+            textdisplay=textdisplay+"Go to Floor "+s[0]+"<br />"
+            ts=""
+            ts=ts+s[0]
+            currentFloor=parseInt(ts)
+            textdisplay=textdisplay+"Go straight to "+locy+" on Floor "+t[0]+"<br />"
+            ts=""
+            ts=ts+t[0]
+            currentFloor=parseInt(ts)
+         }
+}
+
+function initialize(){
+         var i
+         currentFloor=100
+         for (i=0;i<tloc*tloc;i++)
+             a[i]=999
+         ef("DC","C2","2","3")
+         ef("DC","MC","23","34")
+         ef("DC","E3","2","3")
+         ef("MC","M3","4","3")
+         ef("MC","QNC","3","2")
+         ef("QNC","B2","12","23")
+         ef("B2","B1","123","123")
+         ef("B1","ESC","2","2")
+         ef("C2","ESC","2","2")
+         ef("ESC","EIT","3","3")
+         ef("EIT","E3","3","3")
+         ef("EIT","PHY","23","23")
+         ef("PHY","E2","3","3")
+         ef("E3","E2","2","2")
+         ef("E3","E5","4","3")
+         ef("E2","CPH","12","12")
+         ef("E2","RCH","1","2")
+         ef("PHY","RCH","-","3")
+         ef("DWE","RCH","1","2")
+         ef("QNC","SLC","-","-")
+         ef("MC","SLC","-","-")
+         ef("MC","C2","1","0")
+         ef("DWE","E2","-","-")
+         ef("DWE","CPH","2","3")
+         
+}                               
+function getPath(){
+         initialize()
+         var i,j,k,len
+         var prev=""
+         var next=""
+         textdisplay=""
+         var s
+         for (i=0;i<tloc;i++){
+             for (j=0;j<tloc;j++){
+                 if (i==j) continue;
+                 for (k=0;k<tloc;k++){
+                     if (i==k) continue;
+                     if (j==k) continue;
+                     if (a[i*tloc+j]>a[i*tloc+k]+a[k*tloc+j]){
+                        a[i*tloc+j]=a[i*tloc+k]+a[k*tloc+j]
+                        a[j*tloc+i]=a[i*tloc+k]+a[k*tloc+j]
+                        path[i*tloc+j]=merge(path[i*tloc+k],path[k*tloc+j])
+                        path[j*tloc+i]=merge(path[j*tloc+k],path[k*tloc+i])
+                        //alert(path[i*tloc+j])
+                        //alert(path[j*tloc+i])
+                     }
+                 }
+             }
+         }
+         i=0
+         s=path[loc1*tloc+loc2]
+         len=s.length
+         while (s[i]!=','){
+               prev=prev+s[i]
+               i++
+               if (i==len) break
+         }
+        //alert(s)
+         for (j=i+1;j<len;j++){
+             if (s[j]==','){
+                //textdisplay=textdisplay+"From "+prev+" to "+next+"<br />"
+                stairs(prev,next)
+                prev=next
+                next=""
+             }
+             else {
+                next=next+s[j]
+             }
+         }
+         //textdisplay=textdisplay+"From "+prev+" to "+next+"<br />"
+         stairs(prev,next)
+         element=document.getElementById("path")
+         element.innerHTML=textdisplay
+}
+
+function enlight(location){
+         element=document.getElementById(location)
+         text=document.getElementById("text")
+         if (element.src.match("http://s6.sinaimg.cn/orignal/005PMBMqgy704g7kG7b35&690")){
+            if (selected==2) {
+               tele=document.getElementById(names[loc2])
+               tele.src="http://s6.sinaimg.cn/orignal/005PMBMqgy704g7kG7b35&690";
+               selected=selected-1
+            }
+            element.src="http://e.picphotos.baidu.com/album/w%3D1458%3Bq%3D90/sign=2b923db77a1ed21b79c92ae19856e6b5/0d338744ebf81a4cfd09408cd02a6059252da6b8.jpg";
+            selected=selected+1
+            if (selected==1){
+               loc1=getLoc(location)
+               temptext="You are now in "+names[loc1]+"<br />"+"Please click on where you wish to go"
+               text.innerHTML=temptext
+               ttt=document.getElementById("path")
+               ttt.innerHTML=""
+            }
+            if (selected==2){
+               loc2=getLoc(location)
+               temptext="You are now in "+names[loc1]+"<br />"+"You are heading to "+names[loc2]
+               text.innerHTML=temptext
+               getPath()
+            }
+         }
+         else {
+            element.src="http://s6.sinaimg.cn/orignal/005PMBMqgy704g7kG7b35&690";
+            selected=selected-1
+            temploc=getLoc(location)
+            if (selected==0){
+               text.innerHTML="Please click on where you are."
+               ttt=document.getElementById("path")
+               ttt.innerHTML=""
+            }
+            if (selected==1){
+               if (temploc==loc2) {
+                  temptext="You are now in "+names[loc1]+"<br />"+"Please click on where you wish to go"
+                  text.innerHTML=temptext
+                  ttt=document.getElementById("path")
+                  ttt.innerHTML=""
+               }
+               if (temploc==loc1) {
+                  loc1=loc2
+                  temptext="You are now in "+names[loc1]+"<br />"+"Please click on where you wish to go"
+                  text.innerHTML=temptext
+                  ttt=document.getElementById("path")
+                  ttt.innerHTML=""
+               }
+            }
+         }
+} 
+</script>
+
+<div style="position:relative;">
+   <img src="http://s14.sinaimg.cn/orignal/005PMBMqgy704g7ITfvad&690" />
+      <div style="position:absolute;top:182px;left:740px">
+         <img id="DC" onclick="enlight('DC')" src="http://s6.sinaimg.cn/orignal/005PMBMqgy704g7kG7b35&690" width="23" height="33" />
+      </div>
+      <div style="position:absolute;top:180px;left:653px">
+         <img id="MC" onclick="enlight('MC')" src="http://s6.sinaimg.cn/orignal/005PMBMqgy704g7kG7b35&690" width="23" height="33" />
+      </div>
+      <div style="position:absolute;top:229px;left:617px">
+         <img id="QNC" onclick="enlight('QNC')" src="http://s6.sinaimg.cn/orignal/005PMBMqgy704g7kG7b35&690" width="23" height="33" />
+      </div>
+      <div style="position:absolute;top:116px;left:669px">
+         <img id="M3" onclick="enlight('M3')" src="http://s6.sinaimg.cn/orignal/005PMBMqgy704g7kG7b35&690" width="23" height="33" />
+      </div>
+      <div style="position:absolute;top:260px;left:621px">
+         <img id="B2" onclick="enlight('B2')" src="http://s6.sinaimg.cn/orignal/005PMBMqgy704g7kG7b35&690" width="23" height="33" />
+      </div>
+      <div style="position:absolute;top:289px;left:653px">
+         <img id="B1" onclick="enlight('B1')" src="http://s6.sinaimg.cn/orignal/005PMBMqgy704g7kG7b35&690" width="23" height="33" />
+      </div>
+      <div style="position:absolute;top:252px;left:682px">
+         <img id="ESC" onclick="enlight('ESC')" src="http://s6.sinaimg.cn/orignal/005PMBMqgy704g7kG7b35&690" width="23" height="33" />
+      </div>
+      <div style="position:absolute;top:195px;left:696px">
+         <img id="C2" onclick="enlight('C2')" src="http://s6.sinaimg.cn/orignal/005PMBMqgy704g7kG7b35&690" width="23" height="33" />
+      </div>
+      <div style="position:absolute;top:255px;left:718px">
+         <img id="EIT" onclick="enlight('EIT')" src="http://s6.sinaimg.cn/orignal/005PMBMqgy704g7kG7b35&690" width="23" height="33" />
+      </div>
+      <div style="position:absolute;top:308px;left:711px">
+         <img id="PHY" onclick="enlight('PHY')" src="http://s6.sinaimg.cn/orignal/005PMBMqgy704g7kG7b35&690" width="23" height="33" />
+      </div>
+      <div style="position:absolute;top:277px;left:777px">
+         <img id="E3" onclick="enlight('E3')" src="http://s6.sinaimg.cn/orignal/005PMBMqgy704g7kG7b35&690" width="23" height="33" />
+      </div>
+      <div style="position:absolute;top:336px;left:777px">
+         <img id="E2" onclick="enlight('E2')" src="http://s6.sinaimg.cn/orignal/005PMBMqgy704g7kG7b35&690" width="23" height="33" />
+      </div>
+      <div style="position:absolute;top:354px;left:815px">
+         <img id="CPH" onclick="enlight('CPH')" src="http://s6.sinaimg.cn/orignal/005PMBMqgy704g7kG7b35&690" width="23" height="33" />
+      </div>
+      <div style="position:absolute;top:381px;left:760px">
+         <img id="DWE" onclick="enlight('DWE')" src="http://s6.sinaimg.cn/orignal/005PMBMqgy704g7kG7b35&690" width="23" height="33" />
+      </div>
+      <div style="position:absolute;top:350px;left:738px">
+         <img id="RCH" onclick="enlight('RCH')" src="http://s6.sinaimg.cn/orignal/005PMBMqgy704g7kG7b35&690" width="23" height="33" />
+      </div>
+      <div style="position:absolute;top:226px;left:843px">
+         <img id="E5" onclick="enlight('E5')" src="http://s6.sinaimg.cn/orignal/005PMBMqgy704g7kG7b35&690" width="23" height="33" />
+      </div>
+      <div style="position:absolute;top:176px;left:580px">
+         <img id="SLC" onclick="enlight('SLC')" src="http://s6.sinaimg.cn/orignal/005PMBMqgy704g7kG7b35&690" width="23" height="33" />
+      </div>
+      <span id="text" style="position:absolute;top:300px;left:0px;">Please click on where you are.</span>
+      <span id="path" style="position:absolute;top:350px;left:0px;"></span>
+      
+</div>
