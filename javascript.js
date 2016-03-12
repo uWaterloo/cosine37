@@ -19,6 +19,7 @@ angular.module('portalApp')
     $scope.loading = cosine37Factory.loading;
     $scope.item = {value:''};
 
+    $scope.item2 = {value:''};
     // Model for the search and list example
     $scope.model = [{
         title: "Swim",
@@ -81,6 +82,15 @@ angular.module('portalApp')
         $scope.item.value = item;
         // Show details view in the second column
         $scope.portalHelpers.showView('details.html', 2);
+    };
+    
+        // Handle click on an item in the second list 
+    $scope.showDetails2 = function (item) {
+        console.log(item);
+        // Set which item to show in the details view
+        $scope.item2.value = item;
+        // Show details view in the second column
+        $scope.portalHelpers.showView('details2.html', 2);
     };
 
     // Handle "previous item" click from the details page
